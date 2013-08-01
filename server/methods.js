@@ -29,6 +29,13 @@ Meteor.methods({
         throw new Meteor.Error(403, "You must be logged in");
       }
       TestCollection.remove({ _id: options.id, userid: Meteor.userId() });
+    },
+
+    deleteUser: function(email) {
+      if ((email == null) || (email == "test@test.com"))  {
+        throw new Meteor.Error(404, "Invalid user email");
+      }
+      Meteor.users.remove({'emails.address': email});
     }
 });
 
