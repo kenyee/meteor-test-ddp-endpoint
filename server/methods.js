@@ -24,6 +24,24 @@ Meteor.methods({
 		 {$set: {testfield: options.value, 'testarray.val1': options.value}});
     },
 
+    deleteField: function(options) {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error(403, "You must be logged in");
+      }
+      TestCollection.update({ _id: options.id, userid: Meteor.userId() },
+		 {$unset: {newfield: true}});
+    },
+
+    addField: function(options) {
+      if (! Meteor.userId()) {
+        throw new Meteor.Error(403, "You must be logged in");
+      }
+      TestCollection.update({ _id: options.id, userid: Meteor.userId() },
+		 {$unset: {newfield: true}});
+      TestCollection.update({ _id: options.id, userid: Meteor.userId() },
+		 {$set: {newfield: options.value}});
+    },
+
     deleteDoc: function(options) {
       if (! Meteor.userId()) {
         throw new Meteor.Error(403, "You must be logged in");
